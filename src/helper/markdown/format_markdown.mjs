@@ -7,6 +7,7 @@ let formatMarkdown = function () {
         }
         return separateWord.join(' ');
     }
+
     let breakWords = function (words, numberOfWords) {
         let separateWord = words.toLowerCase().split(' ');
         let sentence = ``;
@@ -22,11 +23,13 @@ let formatMarkdown = function () {
         }
         return sentence
     }
+
     let getDate = function () {
         let date = new Date();
         let time = date.toLocaleString('en-US', { timeZone: 'UTC', hour: 'numeric', minute: 'numeric', hour12: true })
         return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${time} UTC`
     }
+
     let getCompany = function (company) {
         if(company === 'undefined value'){
             return `No Company`;
@@ -34,6 +37,7 @@ let formatMarkdown = function () {
             return breakWords(company, 4)
         }
     }
+
     let getName = function (name) {
         if(name === 'undefined value'){
             return `No Name`;
@@ -41,6 +45,7 @@ let formatMarkdown = function () {
             return name
         }
     }
+
     let getTwitterUsername = function (twitterUsername) {
         if(twitterUsername === 'undefined value'){
             return `No Twitter Username`;
@@ -48,6 +53,7 @@ let formatMarkdown = function () {
             return `<a href="https://twitter.com/${twitterUsername}">${twitterUsername}</a>`
         }
     }
+
     let getLocations = function (locationDataModel) {
         let locations = locationDataModel.locations;
         let placesString = ``;
@@ -60,14 +66,17 @@ let formatMarkdown = function () {
         }
         return placesString
     }
+
     let getMinimumFollowersRequirement = function (readCacheResponseModel) {
         let users = readCacheResponseModel.users;
         users.sort((a, b) => parseFloat(b.followers) - parseFloat(a.followers));
         return users[users.length - 1].followers;
     }
+
     let getCountryName = function (country) {
         return country.replace(/\s/g, '_').toLowerCase();
     }
+
     let getNumberOfCities = function (readConfigResponseModel) {
         let numberOfCities = 0;
         for(const locationDataModel of readConfigResponseModel.locations) {
@@ -79,6 +88,7 @@ let formatMarkdown = function () {
         }
         return numberOfCities;
     }
+
     return {
         capitalizeTheFirstLetterOfEachWord: capitalizeTheFirstLetterOfEachWord,
         breakWords: breakWords,
@@ -90,7 +100,6 @@ let formatMarkdown = function () {
         getMinimumFollowersRequirement: getMinimumFollowersRequirement,
         getCountryName: getCountryName,
         getNumberOfCities: getNumberOfCities
-
     };
 }();
 
