@@ -1,6 +1,6 @@
-let OutputFileResponseModel =  function (status, message) {
-    this.status = status;
-    this.message = message;
+export default class OutputFileResponseModel {
+    constructor(status, message) {
+        this.status = status;
+        this.message = message;
+    }
 }
-
-export default OutputFileResponseModel;

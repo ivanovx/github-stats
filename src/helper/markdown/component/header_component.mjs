@@ -1,7 +1,7 @@
 let headerComponent = function () {
     let create = function (pageTitle, country) {
         let markdown = ``;
-        if(pageTitle === undefined && country === undefined){
+        if (pageTitle === undefined && country === undefined){
             markdown = markdown + `# Top GitHub Users By Country `;
             markdown = markdown + `[<img alt="Image of insights" src="https://github.com/gayanvoice/insights/blob/master/graph/373383893/small/week.png" height="24">](https://github.com/gayanvoice/insights/blob/master/readme/373383893/week.md)\n`
             markdown = markdown + `[![Top GitHub Users](https://github.com/gayanvoice/top-github-users/actions/workflows/action.yml/badge.svg)](https://github.com/gayanvoice/top-github-users/actions/workflows/action.yml) `;

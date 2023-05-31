@@ -1,7 +1,7 @@
 {
     "name": "github-stats",
     "version": "0.0.1",
-    "description": "Github stats for Europe",
+    "description": "Github stats for Europe.",
     "main": "src/main.js",
     "author": "Ivan Ivanov",
     "license": "GNU",

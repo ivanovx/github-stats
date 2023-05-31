@@ -1,5 +1,5 @@
-let CheckpointDataModel = function (checkpoint) {
-    this.checkpoint = checkpoint;
+export default class CheckpointDataModel {
+    constructor(checkpoint) {
+        this.checkpoint = checkpoint;
+    }
 }
-
-export default CheckpointDataModel;

@@ -1,4 +1,4 @@
-import octokit from '../../core/octokit.mjs';
+import Octokit from '../../core/octokit.mjs';
 
 let requestOctokit = function () {
     let setLocation = function (place) {
@@ -13,6 +13,7 @@ let requestOctokit = function () {
         return query;
     }
 
+    /*
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
@@ -20,6 +21,7 @@ let requestOctokit = function () {
     const setDelay = function(timeout){
         return new Promise(res => setTimeout(res, timeout));
     }
+    */
 
     let request = async function (AUTH_KEY, MAXIMUM_ERROR_ITERATIONS, location) {
         let hasNextPage = true;
@@ -27,25 +29,36 @@ let requestOctokit = function () {
         let array = [];
         let iterations = 0;
         let errors = 0;
-        for (; hasNextPage;) {
-            let octokitResponseModel = await octokit.request(AUTH_KEY, setQuery(location), cursor);
-            if(octokitResponseModel.status){
+
+        while (hasNextPage) {
+            let octokitResponseModel = await Octokit.request(AUTH_KEY, setQuery(location), cursor);
+
+            if (octokitResponseModel.status) {
                 hasNextPage = octokitResponseModel.pageInfo.hasNextPage;
                 cursor = octokitResponseModel.pageInfo.endCursor;
-                for(const userDataModel of octokitResponseModel.node){
+
+                for(const userDataModel of octokitResponseModel.node) {
                     console.log(`iterations:(${iterations}) errors:(${errors}/${MAXIMUM_ERROR_ITERATIONS}) ${userDataModel.login} ${userDataModel.followers}`)
                     array.push(userDataModel)
                 }
-                let interval = randomIntFromInterval(1000, 5000)
-                console.log(`interval:${interval}ms hasNextPage:${hasNextPage} cursor:${cursor} users:${array.length}`);
-                await setDelay(interval);
-                iterations ++;
+
+                //let interval = randomIntFromInterval(1000, 5000)
+                console.log(`hasNextPage:${hasNextPage} cursor:${cursor} users:${array.length}`);
+
+                //await setDelay(interval);
+
+                iterations++;
             } else {
-                await setDelay(60000);
+                //await setDelay(60000);
+
                 errors ++;
             }
-            if(errors >= MAXIMUM_ERROR_ITERATIONS) hasNextPage = false;
+
+            if (errors >= MAXIMUM_ERROR_ITERATIONS) {
+                hasNextPage = false;
+            }  
         }
+
         return array;
     }
 
