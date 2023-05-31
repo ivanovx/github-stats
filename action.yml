@@ -1,5 +1,0 @@
-name: 'JavaScript Action | File Handling and GitHub Operations'
-description: 'The repository shows file handling and git operations'
-runs:
-  using: 'node16'
-  main: 'dist/index.js'
