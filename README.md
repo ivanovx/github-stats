@@ -12,5 +12,5 @@ This project is based on [top-github-users](https://github.com/gayanvoice/top-gi
 CUSTOM_TOKEN="YOUR GITHUB TOKEN"
 GITHUB_REPOSITORY="your-username/repository-name"
 
-node ./src/index.js
+node ./src/main.js
 ```
