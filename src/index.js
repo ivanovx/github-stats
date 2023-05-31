@@ -1,9 +1,3 @@
-/*!
- * top-github-users-monitor 2.0.0
- * https://github.com/gayanvoice/top-github-users-monitor
- * (c) 2021 gayanvoice
- * Released under the MIT License
- */
 const configFile = require('./helper/file/config_file');
 const outputCheckpoint = require('./helper/checkpoint/output_checkpoint');
 const outputCache = require('./helper/cache/output_cache');
@@ -21,7 +15,7 @@ const OutputMarkdownModel = require('./model/markdown/OutputMarkdownModel');
 
 //let Index = function () {
     const AUTH_KEY = process.env.CUSTOM_TOKEN;
-    const GITHUB_USERNAME_AND_REPOSITORY = "ivanovx/top-github-users";
+    const GITHUB_USERNAME_AND_REPOSITORY = process.env.GITHUB_REPOSITORY;
     const MAXIMUM_ERROR_ITERATIONS = 4;
 
     //for(let i = 0; i < 50; i++) {
