@@ -1,24 +1,22 @@
-import htmlFile from '../../helper/file/html_file.mjs';
+import HtmlFile from '../../helper/file/html_file.mjs';
 
-let outputHtml = (function () {
-    const HTML_FILE = "index.html";
-    const RANKING_FILE = "ranking.json"
-    let setHtmlFilePath = function () {
-        return `docs/${HTML_FILE}`;
-    }
-    let setRankingJsonFilePath = function () {
-        return `docs/${RANKING_FILE}`;
-    }
-    let saveHtmlFile = async function (html) {
-        await htmlFile.outputHtmlFile(setHtmlFilePath(), html);
-    }
-    let saveRankingJsonFile = async function (json) {
-        await htmlFile.outputJsonFile(setRankingJsonFilePath(), json);
-    }
-    return {
-        saveHtmlFile: saveHtmlFile,
-        saveRankingJsonFile: saveRankingJsonFile
-    };
-})();
+export default class OutputHtml {
+    static HTML_FILE = "index.html";
+    static RANKING_FILE = "ranking.json";
 
-export default outputHtml;
+    static setHtmlFilePath() {
+        return `docs/${this.HTML_FILE}`;
+    }
+
+    static setRankingJsonFilePath() {
+        return `docs/${this.RANKING_FILE}`;
+    }
+
+    static async saveHtmlFile(html) {
+        await HtmlFile.outputHtmlFile(this.setHtmlFilePath(), html);
+    }
+    
+    static async saveRankingJsonFile(json) {
+        await HtmlFile.outputJsonFile(this.setRankingJsonFilePath(), json);
+    }
+}
