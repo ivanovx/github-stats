@@ -3,7 +3,7 @@ export default class ReadFileResponseModel {
         this.status = status;
         this.message = message;
 
-        if(status) {
+        if (status) {
             this.content = content;
         } 
     }

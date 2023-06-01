@@ -1,35 +1,45 @@
 import UserDataModel from '../data/UserDataModel.mjs';
 
-let ReadCacheResponseModel = function (status, content) {
-    let validate = function (value) {
+export default class ReadCacheResponseModel {
+    constructor(status, content) {
+        this.status = status;
+
+        if (status) {
+            this.users = this.setUsers(content);
+        } 
+    }
+
+    validate(value) {
         return (value === '' || value === null || value === undefined);
     }
-    let setValue = function (value) {
-        if (validate(value)) {
+
+    setValue(value) {
+        if (this.validate(value)) {
             return "undefined value";
         } else {
             return value;
         }
     }
-    let setUsers = function (content) {
+
+    setUsers(content) {
         let array = [];
-        for(const user of content){
+
+        for (const user of content){
             let userDataModel = new UserDataModel(
-                setValue(user.login),
-                setValue(user.name),
-                setValue(user.avatarUrl),
-                setValue(user.location),
-                setValue(user.company),
-                setValue(user.twitterUsername),
-                setValue(user.followers),
-                setValue(user.privateContributions),
-                setValue(user.publicContributions))
+                this.setValue(user.login),
+                this.setValue(user.name),
+                this.setValue(user.avatarUrl),
+                this.setValue(user.location),
+                this.setValue(user.company),
+                this.setValue(user.twitterUsername),
+                this.setValue(user.followers),
+                this.setValue(user.privateContributions),
+                this.setValue(user.publicContributions)
+            );
+
             array.push(userDataModel)
         }
+
         return array;
     }
-    this.status = status;
-    if (status) this.users = setUsers(content)
 }
-
-export default ReadCacheResponseModel;

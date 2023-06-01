@@ -1,19 +1,21 @@
-let ReadCheckpointResponseModel =  function (status, content) {
-    let validate = function (value) {
+export default class ReadCheckpointResponseModel {
+    constructor(status, content) {
+        this.status = status;
+
+        if (status) {
+            this.checkpoint = this.setCheckpoint(content.checkpoint);
+        } 
+    }
+
+    validate(value) {
         return !(value === '' || value === null || value === undefined);
     }
 
-    let setCheckpoint = function (checkpoint) {
-        if(validate(checkpoint)){
+    setCheckpoint(checkpoint) {
+        if (this.validate(checkpoint)) {
             return checkpoint;
         } else {
             return 0;
         }
     }
-
-    this.status = status;
-
-    if (status) this.checkpoint = setCheckpoint(content.checkpoint);
 }
-
-export default ReadCheckpointResponseModel;

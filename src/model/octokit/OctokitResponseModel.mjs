@@ -34,7 +34,7 @@ export default class OctokitResponseModel {
         let array = [];
 
         for (const node of edges) {
-            if(node.node.__typename === 'User') {
+            if (node.node.__typename === 'User') {
                 let userDataModel = new UserDataModel(
                     this.setValue(node.node.login),
                     this.setValue(node.node.name),

@@ -13,13 +13,13 @@ import requestOctokit from './helper/octokit/request_octokit.mjs';
 import OutputMarkdownModel from './model/markdown/OutputMarkdownModel.mjs';
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY || "your-username/repository-name";
+const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
 const MAXIMUM_ERROR_ITERATIONS = 4;
 
 const saveCache = async readConfigResponseModel => {
     console.log('########## Save cache ##########');
 
-    for await (const locationDataModel of readConfigResponseModel.locations){
+    for await (const locationDataModel of readConfigResponseModel.locations) {
         let json = await requestOctokit.request(GITHUB_TOKEN, MAXIMUM_ERROR_ITERATIONS, locationDataModel.locations);
         let readCacheResponseModel =  await outputCache.readCacheFile(locationDataModel.country);
 
@@ -72,7 +72,7 @@ const main = async () => {
     let readConfigResponseModel = await configFile.readConfigFile();
     let readCheckpointResponseModel = await outputCheckpoint.readCheckpointFile();
 
-    if (readConfigResponseModel.status && readCheckpointResponseModel.status){
+    if (readConfigResponseModel.status && readCheckpointResponseModel.status) {
         await saveCache(readConfigResponseModel);
         await saveMarkdown(readConfigResponseModel, readCheckpointResponseModel)
         await saveHtml(readConfigResponseModel)
@@ -82,4 +82,4 @@ const main = async () => {
 
 (async() => {
     await main();
-})();    
+})();
