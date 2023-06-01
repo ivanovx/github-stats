@@ -1,27 +1,22 @@
-import checkpointFile from '../../helper/file/checkpoint_file.mjs';
+import CheckpointFile from '../../helper/file/checkpoint_file.mjs';
 import CheckpointDataModel from '../../model/data/CheckpointDataModel.mjs';
 
-let outputCheckpoint = (function () {
-    let saveCheckpointFile = async function (locationsArray, country, checkpoint) {
-        let indexOfTheCountry = locationsArray.findIndex(location => location.country === country);
+export default class OutputCheckpoint {
+    static async saveCheckpointFile(locationsArray, country, checkpoint) {
+        const indexOfTheCountry = locationsArray.findIndex(location => location.country === country);
+
         if (indexOfTheCountry === checkpoint) {
-            console.log("checkpoint updated", country)
-            if(indexOfTheCountry >= locationsArray.length - 1){
-                await checkpointFile.outputCheckpointFile(new CheckpointDataModel(0));
+            console.log("checkpoint updated", country);
+
+            if (indexOfTheCountry >= locationsArray.length - 1) {
+                await CheckpointFile.outputCheckpointFile(new CheckpointDataModel(0));
             } else {
-                await checkpointFile.outputCheckpointFile(new CheckpointDataModel(indexOfTheCountry + 1 ))
+                await CheckpointFile.outputCheckpointFile(new CheckpointDataModel(indexOfTheCountry + 1 ))
             }
         }
     }
 
-    let readCheckpointFile = async function () {
-        return await checkpointFile.readCheckpointFile();
+    static async readCheckpointFile() {
+        return await CheckpointFile.readCheckpointFile();
     }
-
-    return {
-        saveCheckpointFile: saveCheckpointFile,
-        readCheckpointFile: readCheckpointFile
-    };
-})();
-
-export default outputCheckpoint;
+}

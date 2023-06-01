@@ -1,25 +1,24 @@
 import File from '../../core/file.mjs';
 import ReadCheckpointResponseModel from '../../model/checkpoint/ReadCheckpointResponseModel.mjs';
 
-let checkpointFile = (function () {
-    const path = 'checkpoint.json';
-    let outputCheckpointFile = async function (json) {
-        let outputFileResponseModel = await File.outputJson(path, json);
-        console.log(outputFileResponseModel.message)
+export default class CheckpointFile {
+    static path = 'checkpoint.json';
+
+    static async outputCheckpointFile(json) {
+        const outputFileResponseModel = await File.outputJson(this.path, json);
+        
+        console.log(outputFileResponseModel.message);
     }
-    let readCheckpointFile = async function () {
-        let readFileResponseModel = await File.readJson(path);
-        console.log(readFileResponseModel.message)
-        if(readFileResponseModel.status){
+    
+    static async readCheckpointFile() {
+        const readFileResponseModel = await File.readJson(this.path);
+
+        console.log(readFileResponseModel.message);
+
+        if (readFileResponseModel.status) {
             return new ReadCheckpointResponseModel(readFileResponseModel.status, readFileResponseModel.content);
         } else {
             return new ReadCheckpointResponseModel(readFileResponseModel.status);
         }
     }
-    return {
-        readCheckpointFile: readCheckpointFile,
-        outputCheckpointFile: outputCheckpointFile
-    };
-})();
-
-export default checkpointFile;
+}

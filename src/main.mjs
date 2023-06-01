@@ -1,6 +1,6 @@
-import configFile from './helper/file/config_file.mjs';
-import outputCheckpoint from './helper/checkpoint/output_checkpoint.mjs';
-import outputCache from './helper/cache/output_cache.mjs';
+import ConfigFile from './helper/file/config_file.mjs';
+import OutputCheckpoint from './helper/checkpoint/output_checkpoint.mjs';
+import OutputCache from './helper/cache/output_cache.mjs';
 import outputMarkdown from './helper/markdown/output_markdown.mjs';
 import outputHtml from './helper/html/output_html.mjs';
 import createHtmlFile from './helper/html/file/create_html_file.mjs';
@@ -21,7 +21,7 @@ const saveCache = async readConfigResponseModel => {
 
     for await (const locationDataModel of readConfigResponseModel.locations) {
         let json = await requestOctokit.request(GITHUB_TOKEN, MAXIMUM_ERROR_ITERATIONS, locationDataModel.locations);
-        let readCacheResponseModel =  await outputCache.readCacheFile(locationDataModel.country);
+        let readCacheResponseModel =  await OutputCache.readCacheFile(locationDataModel.country);
 
         if (readCacheResponseModel.status) {
             if (readCacheResponseModel.users.length > json.length) {
@@ -29,12 +29,12 @@ const saveCache = async readConfigResponseModel => {
             } else {
                 console.log(`request success cache:${readCacheResponseModel.users.length} octokit:${json.length}`);
                 
-                await outputCache.saveCacheFile(locationDataModel.country, json);
+                await OutputCache.saveCacheFile(locationDataModel.country, json);
             }
         } else {
             console.log(`request success octokit:${json.length}`);
             
-            await outputCache.saveCacheFile(locationDataModel.country, json);
+            await OutputCache.saveCacheFile(locationDataModel.country, json);
         }
     }
 }
@@ -43,7 +43,7 @@ const saveMarkdown = async (readConfigResponseModel, readCheckpointResponseModel
     console.log('########## Save Markdown ##########');
 
     for await (const locationDataModel of readConfigResponseModel.locations) {
-        let readCacheResponseModel =  await outputCache.readCacheFile(locationDataModel.country);
+        let readCacheResponseModel =  await OutputCache.readCacheFile(locationDataModel.country);
 
         if (readCacheResponseModel.status) {
             let outputMarkdownModel = new OutputMarkdownModel(GITHUB_USERNAME_AND_REPOSITORY, locationDataModel, readCacheResponseModel, readConfigResponseModel);
@@ -53,7 +53,7 @@ const saveMarkdown = async (readConfigResponseModel, readCheckpointResponseModel
             await outputMarkdown.saveFollowersMarkdownFile(locationDataModel.country, createFollowersPage.create(outputMarkdownModel));
         }
 
-        await outputCheckpoint.saveCheckpointFile(readConfigResponseModel.locations, locationDataModel.country, readCheckpointResponseModel.checkpoint)
+        await OutputCheckpoint.saveCheckpointFile(readConfigResponseModel.locations, locationDataModel.country, readCheckpointResponseModel.checkpoint)
     }
 
     if (!readConfigResponseModel.devMode) {
@@ -69,8 +69,8 @@ const saveHtml = async readConfigResponseModel => {
 }
 
 const main = async () => {
-    let readConfigResponseModel = await configFile.readConfigFile();
-    let readCheckpointResponseModel = await outputCheckpoint.readCheckpointFile();
+    let readConfigResponseModel = await ConfigFile.readConfigFile();
+    let readCheckpointResponseModel = await OutputCheckpoint.readCheckpointFile();
 
     if (readConfigResponseModel.status && readCheckpointResponseModel.status) {
         await saveCache(readConfigResponseModel);

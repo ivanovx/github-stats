@@ -1,27 +1,21 @@
-import cacheFile from '../../helper/file/cache_file.mjs';
+import CacheFile from '../../helper/file/cache_file.mjs';
 
-let outputCache = (function () {
-    let getCountryName = function (country) {
+export default class OutputCache {
+    static getCountryName(country) {
         return country.replace(/\s/g, '_').toLowerCase();
     }
 
-    let getPath = function (country) {
-        let fileName = getCountryName(country)
+    static getPath(country) {
+        const fileName = this.getCountryName(country);
+
         return `cache/${fileName}.json`;
     }
 
-    let saveCacheFile = async function (country, json) {
-        await cacheFile.outputCacheFile(getPath(country), json);
+    static async saveCacheFile(country, json) {
+        await CacheFile.outputCacheFile(this.getPath(country), json);
     }
 
-    let readCacheFile = async function (country) {
-        return await cacheFile.readCacheFile(getPath(country));
+    static async readCacheFile(country) {
+        return await CacheFile.readCacheFile(this.getPath(country));
     }
-    
-    return {
-        saveCacheFile: saveCacheFile,
-        readCacheFile: readCacheFile
-    };
-})();
-
-export default outputCache;
+}
