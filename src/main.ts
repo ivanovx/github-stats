@@ -68,18 +68,12 @@ const saveHtml = async readConfigResponseModel => {
     await outputHtml.saveHtmlFile(createHtmlFile());
 }
 
-const main = async () => {
-    let readConfigResponseModel = await ConfigFile.readConfigFile();
-    let readCheckpointResponseModel = await OutputCheckpoint.readCheckpointFile();
 
-    if (readConfigResponseModel.status && readCheckpointResponseModel.status) {
-        await saveCache(readConfigResponseModel);
-        await saveMarkdown(readConfigResponseModel, readCheckpointResponseModel)
-        await saveHtml(readConfigResponseModel)
-    }
+const readConfigResponseModel = await ConfigFile.readConfigFile();
+const readCheckpointResponseModel = await OutputCheckpoint.readCheckpointFile();
+
+if (readConfigResponseModel.status && readCheckpointResponseModel.status) {
+    await saveCache(readConfigResponseModel);
+    await saveMarkdown(readConfigResponseModel, readCheckpointResponseModel)
+    await saveHtml(readConfigResponseModel)
 }
-
-
-(async() => {
-    await main();
-})();
