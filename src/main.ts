@@ -68,7 +68,6 @@ const saveHtml = async readConfigResponseModel => {
     await outputHtml.saveHtmlFile(createHtmlFile());
 }
 
-
 const readConfigResponseModel = await ConfigFile.readConfigFile();
 const readCheckpointResponseModel = await OutputCheckpoint.readCheckpointFile();
 

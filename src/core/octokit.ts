@@ -3,10 +3,10 @@ import { graphql } from "@octokit/graphql";
 import OctokitResponseModel from "../model/octokit/OctokitResponseModel";
 
 export default class Octokit {
-    static getHeader(AUTH_KEY) {
+    static getHeader(authKey) {
         return {
             headers: {
-                authorization: `token ${AUTH_KEY}`,
+                authorization: `token ${authKey}`,
             }
         }
     }
@@ -54,9 +54,9 @@ export default class Octokit {
         }
     }
 
-    static async request(AUTH_KEY, locations, cursor) {
+    static async request(authKey, locations, cursor) {
         try {
-            const graphqlWithAuth = graphql.defaults(this.getHeader(AUTH_KEY));
+            const graphqlWithAuth = graphql.defaults(this.getHeader(authKey));
             const response = await graphqlWithAuth(this.getQuery(locations, 10, this.setCursor(cursor)));
 
             return new OctokitResponseModel(true, response);
